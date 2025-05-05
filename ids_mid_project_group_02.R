@@ -1,7 +1,6 @@
 #install.packages("dplyr")
 library(dplyr)
 
-#REMOVE COMMENTS
 mydata <- read.csv("YOUR FILE PATH OF THE DATASET", header = TRUE, sep = ",")
 copy_data <- mydata
 View(copy_data)
@@ -28,7 +27,6 @@ cat("\n====== Missing Values After Replacing Empty Strings with NA: ======\n")
 copy_data[copy_data == ""] <- NA
 colSums(is.na(copy_data))
 
-
 missing_age_rows <- which(is.na(copy_data$age))
 cat("Rows with missing values in 'age' column: ", missing_age_rows, "\n")
 
@@ -38,7 +36,6 @@ cat("Mean age (calculated): ", mean_age, "\n")
 copy_data$age[is.na(copy_data$age)] <- mean_age
 cat("Missing values in 'age' column after replacement: ", 
     sum(is.na(copy_data$age)), "\n")
-
 
 missing_ca_rows <- which(is.na(copy_data$ca))
 cat("Rows with missing values in 'ca' column: ", missing_ca_rows, "\n")
@@ -53,7 +50,6 @@ copy_data$ca[is.na(copy_data$ca)] <- mode_ca
 cat("Missing values in 'ca' column after replacement: ", 
     sum(is.na(copy_data$ca)), "\n")
 
-
 missing_thal_rows <- which(is.na(copy_data$thal))
 cat("Rows with missing values in 'thal' column: ", missing_thal_rows, "\n")
 
@@ -65,7 +61,6 @@ cat("Mode value of 'thal': ", mode_thal, "\n")
 
 copy_data$thal[is.na(copy_data$thal)] <- mode_thal
 cat("Missing values in 'thal' after replacement: ", sum(is.na(copy_data$thal)), "\n")
-
 
 cat("Identifying Outliers in Age Column:\n")
 Q1_age <- quantile(copy_data$age, 0.25)
@@ -80,7 +75,6 @@ if(length(age_outliers) == 0) {
   cat("Outliers found in Age column:\n")
   age_outliers
 }
-
 
 cat("Identifying Outliers in trestbps Column:\n")
 Q1_trestbps <- quantile(copy_data$trestbps, 0.25)
@@ -109,7 +103,6 @@ if(length(trestbps_outliers) == 0) {
   cat("Remaining outliers in trestbps column after replacement:\n")
   trestbps_outliers
 }
-
 
 cat("Identifying Outliers in chol Column:\n")
 Q1_chol <- quantile(copy_data$chol, 0.25)
@@ -156,7 +149,6 @@ if(length(thalach_outliers) == 0) {
   thalach_outliers
 }
 
-
 cat("Identifying Outliers in oldpeak Column:\n")
 Q1_oldpeak <- quantile(copy_data$oldpeak, 0.25)
 Q3_oldpeak <- quantile(copy_data$oldpeak, 0.75)
@@ -191,15 +183,12 @@ copy_data$thal <- factor(copy_data$thal,
                     labels = c(1, 2, 3))
 copy_data$thal <- as.numeric(as.character(copy_data$thal))
 
-
 cat("Converting 'num' from numeric to categorical...\n")
 copy_data$num <- factor(copy_data$num, 
                    levels = c(0, 1), 
                    labels = c("No", "Yes"))
 
-
 names(copy_data)[16] <- "diagnosis"
-
 
 normalize <- function(x) {
   (x - min(x)) / (max(x) - min(x))
@@ -210,7 +199,6 @@ copy_data$oldpeak <- normalize(copy_data$oldpeak)
 copy_data$thalch <- normalize(copy_data$thalch)
 cat("Normalized continuous attributes: trestbps, chol, oldpeak, thalch\n")
 
-
 cat("Count of Dupliate rows:", sum(duplicated(copy_data)), "\n")
 
 
@@ -218,11 +206,9 @@ filtered_data <- subset(copy_data, age > 60 & chol > 0.7 & diagnosis == "Yes")
 cat("Rows with high normalized cholesterol, and diagnosed with heart disease: ", 
                                                     nrow(filtered_data), "\n")
 
-
 table(copy_data$sex)
 cat("Invalid value in Row: ", which(copy_data$sex == "F"))
 copy_data$sex[copy_data$sex == "F"] <- "Female"
-
 
 new_rows <- 90
 new_data <- data.frame(
@@ -257,7 +243,6 @@ cat("Median Age:", median_age, "years\n")
 cat("Mode Age:", mode_age, "years\n")
 cat("=======================\n\n")
 
-
 diag_table <- table(copy_data$diagnosis)
 mode_diag <- names(diag_table)[which.max(diag_table)]
 cat("\n===== Diagnosis Distribution =====\n")
@@ -265,7 +250,6 @@ cat("Most Common Diagnosis:", mode_diag, "\n")
 cat("Healthy vs Disease:\n")
 print(diag_table)
 cat("==============================\n\n")
-
 
 mean_chol <- mean(copy_data$chol)
 median_chol <- median(copy_data$chol)
@@ -278,7 +262,6 @@ cat("Mode Cholesterol:", round(mode_chol, 3), "\n")
 cat("(0 = min, 1 = max cholesterol)\n")
 cat("================================\n\n")
 
-
 cp_table <- table(copy_data$cp)
 mode_cp <- names(cp_table)[which.max(cp_table)]
 cat("\n===== Chest Pain Types =====\n")
@@ -286,7 +269,6 @@ cat("Most Common Chest Pain Type:", mode_cp, "\n")
 cat("Full Distribution:\n")
 print(cp_table)
 cat("===========================\n")
-
 
 age_range <- range(copy_data$age)
 age_iqr <- IQR(copy_data$age)
@@ -298,7 +280,6 @@ cat("Age Spread Metrics:\n",
     "Variance:", round(age_var,1), "\n",
     "Standard Deviation:", round(age_sd,1), "years")
 
-
 bp_range <- range(copy_data$trestbps)
 bp_iqr <- IQR(copy_data$trestbps)
 bp_var <- var(copy_data$trestbps)
@@ -308,7 +289,6 @@ cat("\n\nNormalized Blood Pressure Spread:\n",
     "IQR:", round(bp_iqr,4), "(middle 50% range)\n",
     "Variance:", round(bp_var,5), "\n",
     "Standard Deviation:", round(bp_sd,3))
-
 
 set.seed(123)
 total_patients <- nrow(copy_data)
@@ -321,7 +301,6 @@ print(paste("Test patients:", nrow(test_set)))
 View(training_set)
 View(test_set)
 
-
 mean_age <- mean(training_set$age)
 median_age <- median(training_set$age)
 age_table <- table(training_set$age)
@@ -331,14 +310,12 @@ cat("Patient Age:\n",
     "Median:", median_age, "years\n",
     "Mode:", mode_age, "years\n")
 
-
 diag_table <- table(training_set$diagnosis)
 mode_diag <- names(diag_table)[which.max(diag_table)]
 cat("\nDiagnosis Distribution:\n",
     "Most common:", mode_diag, "\n",
     "Healthy vs Disease:\n")
 print(diag_table)
-
 
 mean_chol <- mean(training_set$chol)
 median_chol <- median(training_set$chol)
@@ -350,14 +327,12 @@ cat("\nNormalized Cholesterol:\n",
     "Mode:", round(mode_chol,3), "\n",
     "(0 = min, 1 = max cholesterol)")
 
-
 cp_table <- table(training_set$cp)
 mode_cp <- names(cp_table)[which.max(cp_table)]
 cat("\nChest Pain Types:\n",
     "Most common:", mode_cp, "\n",
     "Full distribution:\n")
 print(cp_table)
-
 
 age_range <- range(training_set$age)
 age_iqr <- IQR(training_set$age)
@@ -379,8 +354,6 @@ cat("\n\nNormalized Blood Pressure Spread:\n",
     "Variance:", round(bp_var,5), "\n",
     "Standard Deviation:", round(bp_sd,3))
 
-
-
 mean_age <- mean(test_set$age)
 median_age <- median(test_set$age)
 age_table <- table(test_set$age)
@@ -390,14 +363,12 @@ cat("Patient Age:\n",
     "Median:", median_age, "years\n",
     "Mode:", mode_age, "years\n")
 
-
 diag_table <- table(test_set$diagnosis)
 mode_diag <- names(diag_table)[which.max(diag_table)]
 cat("\nDiagnosis Distribution:\n",
     "Most common:", mode_diag, "\n",
     "Healthy vs Disease:\n")
 print(diag_table)
-
 
 mean_chol <- mean(test_set$chol)
 median_chol <- median(test_set$chol)
@@ -409,14 +380,12 @@ cat("\nNormalized Cholesterol:\n",
     "Mode:", round(mode_chol,3), "\n",
     "(0 = min, 1 = max cholesterol)")
 
-
 cp_table <- table(test_set$cp)
 mode_cp <- names(cp_table)[which.max(cp_table)]
 cat("\nChest Pain Types:\n",
     "Most common:", mode_cp, "\n",
     "Full distribution:\n")
 print(cp_table)
-
 
 age_range <- range(test_set$age)
 age_iqr <- IQR(test_set$age)
@@ -428,7 +397,6 @@ cat("Age Spread Metrics:\n",
     "Variance:", round(age_var,1), "\n",
     "Standard Deviation:", round(age_sd,1), "years")
 
-
 bp_range <- range(test_set$trestbps)
 bp_iqr <- IQR(test_set$trestbps)
 bp_var <- var(test_set$trestbps)
@@ -438,4 +406,3 @@ cat("\n\nNormalized Blood Pressure Spread:\n",
     "IQR:", round(bp_iqr,4), "(middle 50% range)\n",
     "Variance:", round(bp_var,5), "\n",
     "Standard Deviation:", round(bp_sd,3))
-
