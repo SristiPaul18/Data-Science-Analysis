@@ -60,7 +60,7 @@ The following preprocessing steps were applied to prepare the dataset for furthe
 
 ### 5. **Duplicate Removal**
 
-* **Removing Duplicates**: Duplicate rows were identified and removed to ensure the dataset contains only unique records.
+* **Removing Duplicates**: If duplicate rows were identified then they were removed to ensure the dataset contains only unique records.
 
 ### 6. **Data Filtering**
 
