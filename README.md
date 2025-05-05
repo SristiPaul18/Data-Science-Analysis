@@ -100,4 +100,4 @@ install.packages("dplyr")
 
 ## Conclusion
 
-This preprocessing pipeline ensures that the Heart Disease dataset is clean, normalized, and ready for machine learning models. The steps outlined above help prepare the data by handling missing values, correcting outliers, encoding categorical features, and splitting the dataset for training and testing.
+This preprocessing pipeline applies basic data cleaning techniques to the Heart Disease dataset. The steps include handling missing values, addressing outliers, encoding categorical features, and splitting the data into training and testing sets. While the preprocessing methods implemented here serve the purpose of the assignment, it’s important to note that this process may not be exhaustive or perfect. Further refinement and more advanced techniques may be necessary for real-world applications or to achieve optimal results for machine learning models.
